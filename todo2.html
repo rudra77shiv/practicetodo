@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO</title>
+  </head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+  <style>
+    body {
+      border: 1px solid;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 10px;
+      flex-direction: column;
+    }
+
+    .structure {
+      border: 1px solid;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 20px;
+      padding: 20px;
+    }
+
+    .inputflex {
+      display: flex;
+      flex-direction: column;
+    }
+    /* .input{
+      display: flex;
+      flex-direction: column;
+    } */
+    .btn {
+      justify-content: center;
+    }
+    .container {
+        display: flex;
+  flex-direction: row;
+  margin: 85px;
+    }
+    .table {
+  display: flex;
+  width: 196px;
+  justify-content: center;
+  border: 2px solid gray;
+  margin: 24px;
+  flex-direction: column;
+} 
+
+.dot{
+    border-top: 1px dotted;
+}
+.data {
+  display: flex;
+  flex-direction: column;
+} 
+  </style>
+  <!-- <script>
+    function validateForm() {
+      let title = $("#title").val();
+      let data = $("#item").val();
+
+      if (title.toLowerCase() === "list1") {
+        $("#list1").append("<span>" + data + "</span>");
+        // window.localStorage.setItem("bharat,kandpal");
+      } else if (title.toLowerCase() === "list2") {
+        $("#list2").append("<span>" + data + "</span>");
+      } else if (title.toLowerCase() === "list3") {
+        $("#list3").append("<span>" + data + "</span>");
+      } else {
+        alert("Please select the correct list");
+        //return false;
+      }
+    }
+  </script> -->
+  <script>
+
+    $(document).ready(function() {
+      // initialize todoList array
+      var todoList = [];
+    
+      // render list on page load
+      renderList();
+    
+      // add item to todoList
+      function addItem(title, items) {
+        // generate random id
+        var id = Math.floor(Math.random() * 100000);
+        // create new object
+        var newItem = {
+          title: title,
+          items: items,
+          id: id
+        };
+        // add object to todoList
+        todoList.unshift(newItem);
+        // render list
+        renderList();
+      }
+    
+      // delete item from todoList
+      function deleteItem(id) {
+        // find item with matching id
+        var index = todoList.findIndex(function(item) {
+          return item.id == id;
+        });
+        // remove item from todoList
+        todoList.splice(index, 1);
+        // render list
+        renderList();
+      }
+    
+      // render list from todoList
+      function renderList() {
+        // clear existing list
+        $('#todo-list').empty();
+        // loop through todoList and add items to list
+        $.each(todoList, function(index, item) {
+          // create new item element
+          var newItem = $('<div>').addClass('todo-item');
+          // create delete button element
+          var deleteButton = $('<button>').addClass('delete-button').text('Delete').click(function() {
+            // delete item when delete button is clicked
+            deleteItem(item.id);
+          });
+          // create title element
+          var title = $('<h3>').text(item.title);
+          // create items element
+          var items = $('<ul>');
+          // loop through item's items and add to items element
+          $.each(item.items, function(index, item) {
+            var li = $('<li>').text(item);
+            items.append(li);
+          });
+          // add title, items, and delete button to item element
+          newItem.append(title, items, deleteButton);
+          // add item element to todo-list
+          $('#todo-list').append(newItem);
+        });
+      }
+    
+      // add new item when form is submitted
+      $('#add-item-form').submit(function(event) {
+        event.preventDefault();
+        var title = $('#item-title').val();
+        var items = $('#item-items').val().split('\n');
+        addItem(title, items);
+        $('#add-item-form').trigger('reset');
+      });
+    });
+    
+      </script>
+  <body>
+    <div class="container" id="todo-list">
+    </div>
+
+    <div class="structure">
+      <form class="set" name="myform" id="add-item-form">
+        <label for="#item-title"> </label>
+        <input
+          class="inputflex"
+          type="text"
+          id="item-title" 
+          placeholder="TO DO-TITLE"
+        />
+        <label for="#item-items></label>
+        <input class="input" type="text" id="item-items" placeholder="TO DO-ITEM" />
+        <textarea id="item-items" name="item-items"></textarea>
+      </form>
+      <button class="btn" onclick="validateForm()">Add Item</button>
+    </div>
+  </body>
+</html>
